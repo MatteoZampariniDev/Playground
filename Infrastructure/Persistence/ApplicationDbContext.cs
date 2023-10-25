@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Playground.Server.Application.Common.Interfaces;
+using Playground.Application.Common.Interfaces;
 using System.Reflection;
 
-namespace Playground.Server.Infrastructure.Persistence;
+namespace Playground.Infrastructure.Persistence;
 public class ApplicationDbContext : IdentityDbContext, IApplicationDbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }

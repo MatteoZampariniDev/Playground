@@ -4,8 +4,8 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<RootNamespace>Playground.Server.Application</RootNamespace>
-		<AssemblyName>Playground.Server.Application</AssemblyName>
+		<RootNamespace>Playground.Application</RootNamespace>
+		<AssemblyName>Playground.Application</AssemblyName>
 	</PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="MediatR" Version="12.1.1" />

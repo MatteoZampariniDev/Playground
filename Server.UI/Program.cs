@@ -1,10 +1,16 @@
+using Playground.Application;
+using Playground.Infrastructure;
+using Playground.Server;
+using Playground.Server.UI;
 using Playground.Server.UI.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+builder.Services
+    .AddApplication()
+    .AddInfrastructure()
+    .AddServer()
+    .AddServerUI();
 
 var app = builder.Build();
 

@@ -4,8 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-	  <RootNamespace>Playground.Server.Infrastructure</RootNamespace>
-	  <AssemblyName>Playground.Server.Infrastructure</AssemblyName>
+	  <RootNamespace>Playground.Infrastructure</RootNamespace>
+	  <AssemblyName>Playground.Infrastructure</AssemblyName>
   </PropertyGroup>
 
 	<ItemGroup>

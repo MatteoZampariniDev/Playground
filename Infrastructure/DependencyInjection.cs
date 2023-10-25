@@ -1,13 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Playground.Server.Application.Common.Interfaces;
-using Playground.Server.Infrastructure.Persistence;
+using Playground.Application.Common.Interfaces;
+using Playground.Infrastructure.Persistence;
 
-namespace Playground.Server.Infrastructure;
+namespace Playground.Infrastructure;
 public static class DependencyInjection
 {
-    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services)
     {
         return services.AddDatabase();
     }
