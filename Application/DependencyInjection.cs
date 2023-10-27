@@ -1,4 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Playground.Application.Common.Caching;
+using Playground.Application.Common.Interfaces;
+using Playground.Application.Pipeline;
 using System.Reflection;
 
 namespace Playground.Application;
@@ -6,22 +10,31 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
-        //services.AddAutoMapper(Assembly.GetExecutingAssembly());
-        //services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            //config.NotificationPublisher = new ParallelNoWaitPublisher();
-            //config.AddRequestPreProcessor(typeof(IRequestPreProcessor<>), typeof(ValidationPreProcessor<>));
-            //config.AddOpenBehavior(typeof(PerformanceBehaviour<,>));
-            //config.AddOpenBehavior(typeof(UnhandledExceptionBehaviour<,>));
-            //config.AddOpenBehavior(typeof(RequestExceptionProcessorBehavior<,>));
-            //config.AddOpenBehavior(typeof(MemoryCacheBehaviour<,>));
-            //config.AddOpenBehavior(typeof(AuthorizationBehaviour<,>));
-            //config.AddOpenBehavior(typeof(CacheInvalidationBehaviour<,>));
+            config.AddOpenBehavior(typeof(CacheInvalidationBehaviour<,>));
+            config.AddOpenBehavior(typeof(MemoryCacheBehaviour<,>));
         });
 
-        //services.AddLazyCache();
+        services.AddLazyCache();
+        services.AddScoped<IRequestCacheService, RequestCacheService>();
+        services.AddRequestCaches();
+
+        return services;
+    }
+
+    private static IServiceCollection AddRequestCaches(this IServiceCollection services)
+    {
+        var cacheTypes = Assembly.GetExecutingAssembly()
+            .GetTypes().Where(type => type.IsClass
+            && !type.IsAbstract
+            && type.IsSubclassOf(typeof(BaseCache)));
+
+        foreach (var t in cacheTypes)
+        {
+            services.TryAddSingleton(t);
+        }
 
         return services;
     }
