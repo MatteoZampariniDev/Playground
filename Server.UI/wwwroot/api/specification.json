@@ -36,6 +36,16 @@
         }
       }
     },
+    "/products/get-all": {
+      "get": {
+        "operationId": "GetProductsGetAll",
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        }
+      }
+    },
     "/other/get": {
       "get": {
         "operationId": "GetOtherGet",

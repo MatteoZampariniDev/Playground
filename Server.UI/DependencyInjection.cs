@@ -92,6 +92,15 @@ public static class DependencyInjection
                 return Results.NoContent();
             });
 
+
+        app.MapGet("products/get-all",
+            async (ISender sender) =>
+            {
+                await sender.Send(new GetAllProductsQuery());
+
+                return Results.NoContent();
+            });
+
         app.MapGet("other/get",
             async (ISender sender) =>
             {

@@ -1,18 +1,32 @@
 using Playground.Application.Common.Caching;
-using Playground.Application.Features.OtherFeature;
 
 namespace Playground.Application.Features.Products;
 
+
 [Cacheable<ProductCache>]
-[CacheInvalidator<FeatureCache>] // just for testing
 public class GetProductQuery : IRequest<SampleResult>
 {
 
 }
 
-public class GetAllProductsQueryHandler : IRequestHandler<GetProductQuery, SampleResult>
+[Cacheable<ProductCache>]
+public class GetAllProductsQuery : IRequest<SampleResult>
+{
+
+}
+
+public class GetAllProductsQueryHandler : IRequestHandler<GetProductQuery, SampleResult>,
+    IRequestHandler<GetAllProductsQuery, SampleResult>
 {
     public Task<SampleResult> Handle(GetProductQuery request, CancellationToken cancellationToken)
+    {
+        return Task.FromResult(new SampleResult
+        {
+            TestMessage = "Query received"
+        });
+    }
+
+    public Task<SampleResult> Handle(GetAllProductsQuery request, CancellationToken cancellationToken)
     {
         return Task.FromResult(new SampleResult
         {
