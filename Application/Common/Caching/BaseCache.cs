@@ -10,14 +10,6 @@ public abstract class BaseCache
     /// </summary>
     private class CancellationTokenWrapper
     {
-        // testing only
-        private string _cacheName;
-
-        public CancellationTokenWrapper(string cacheName)
-        {
-            this._cacheName = cacheName;
-        }
-
         private CancellationTokenSource? _tokenSource;
 
         public CancellationTokenSource Get(TimeSpan refreshInterval)
@@ -39,14 +31,7 @@ public abstract class BaseCache
         }
     }
 
-    public string Key => this.GetType().FullName!;
-
-    private readonly CancellationTokenWrapper tokenWrapper;
-
-    public BaseCache()
-    {
-        this.tokenWrapper ??= new(this.GetType().FullName!);
-    }
+    private readonly CancellationTokenWrapper tokenWrapper = new();
 
     public virtual MemoryCacheEntryOptions MemoryCacheEntryOptions =>
         new MemoryCacheEntryOptions().AddExpirationToken(new CancellationChangeToken(this.tokenWrapper.Get(this.RefreshInterval).Token));

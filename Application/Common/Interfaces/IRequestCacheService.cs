@@ -11,7 +11,6 @@ public interface IRequestCacheService
     void Refresh(Type cacheType);
 }
 
-
 public class RequestCacheService : IRequestCacheService
 {
     private readonly IAppCache _appCache;
@@ -27,9 +26,8 @@ public class RequestCacheService : IRequestCacheService
     {
         var cache = this._serviceProvider.GetRequiredService(cacheType) as BaseCache;
 
-#if DEBUG // testing only, will be removed
+        // testing only, will be removed
         var currentCached = await this._appCache.GetAsync<TResponse>(RequestAsCacheableString(request));
-#endif
 
         return await this._appCache.GetOrAddAsync(
             RequestAsCacheableString(request),
@@ -40,9 +38,7 @@ public class RequestCacheService : IRequestCacheService
     public void Refresh(Type cacheType)
     {
         var cache = this._serviceProvider.GetRequiredService(cacheType) as BaseCache;
-
-        this._appCache.Remove(cache!.Key);
-        cache.Refresh();
+        cache!.Refresh();
     }
 
     private static string RequestAsCacheableString<TRequest>(TRequest cacheableRequest)
